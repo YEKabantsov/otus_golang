@@ -43,6 +43,10 @@ var text = `Как видите, он  спускается  по  лестни�
 	посидеть у огня и послушать какую-нибудь интересную сказку.
 		В этот вечер...`
 
+var textLessThan10 = "а а а, бб бб, с си сис"
+
+var textContainsWordsWithSameFreq = "б а к л лл мм кк нн"
+
 func TestTop10(t *testing.T) {
 	t.Run("no words in empty string", func(t *testing.T) {
 		require.Len(t, Top10(""), 0)
@@ -78,5 +82,19 @@ func TestTop10(t *testing.T) {
 			}
 			require.Equal(t, expected, Top10(text))
 		}
+	})
+
+	t.Run("count top words less than 10", func(t *testing.T) {
+		expected := []string{
+			"а", "а,", "бб", "бб,", "с", "си", "сис",
+		}
+		require.Equal(t, expected, Top10(textLessThan10))
+	})
+
+	t.Run("sort words with same frequency in text", func(t *testing.T) {
+		expected := []string{
+			"а", "б", "к", "кк", "л", "лл", "мм", "нн",
+		}
+		require.Equal(t, expected, Top10(textContainsWordsWithSameFreq))
 	})
 }
